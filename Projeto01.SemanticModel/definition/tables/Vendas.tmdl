@@ -1,0 +1,122 @@
+table Vendas
+	lineageTag: b3bfdf4b-607e-4095-a0b9-df90b3c76188
+
+	column 'ID da Venda'
+		dataType: int64
+		formatString: 0
+		lineageTag: c88d622f-9254-468e-a6c5-e3aa82facb6e
+		summarizeBy: sum
+		sourceColumn: ID da Venda
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data da Venda'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bafc24f8-c522-4f04-8517-996630f71668
+		summarizeBy: none
+		sourceColumn: Data da Venda
+
+		variation Variation
+			isDefault
+			relationship: 5bd92973-c5db-4e3b-8065-1de623fb2538
+			defaultHierarchy: LocalDateTable_5edb044c-a49d-4b73-b38b-533f285c501c.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'ID Produto'
+		dataType: int64
+		formatString: 0
+		lineageTag: e0cf5953-71b1-4a8f-bd3f-e04edb58d903
+		summarizeBy: sum
+		sourceColumn: ID Produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produto
+		dataType: string
+		lineageTag: 365db74f-81ec-46f3-810d-032d7f79ac55
+		summarizeBy: none
+		sourceColumn: Produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: 15e2040f-814e-4340-85b2-3cb211ac262a
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantidade
+		dataType: int64
+		formatString: 0
+		lineageTag: 2470a7a2-bd3f-4351-a561-a7ace1d5e802
+		summarizeBy: sum
+		sourceColumn: Quantidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Preço Unitário'
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 18cd7a8f-6e8f-4d72-8593-c667c2261587
+		summarizeBy: sum
+		sourceColumn: Preço Unitário
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column 'Preço Total'
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 97f4e4d7-5443-4d72-9a97-7bbf315c72d0
+		summarizeBy: sum
+		sourceColumn: Preço Total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column 'Método de Pagamento'
+		dataType: string
+		lineageTag: 9bff3f4b-cfed-448f-a2c4-04997f02addb
+		summarizeBy: none
+		sourceColumn: Método de Pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 2a3adb4c-0818-4261-8a7c-ea03cdac8558
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Vendas = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("\\wsl.localhost\Ubuntu\home\igbarreto\courses\datadriven\Formação em Power BI - Aluno - Dashboard Introdução\DADOSeICONES\Vendas - Ecommerce.xlsx"), null, true),
+				    Vendas_Sheet = Fonte{[Item="Vendas",Kind="Sheet"]}[Data],
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Vendas_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"ID da Venda", Int64.Type}, {"Data da Venda", type datetime}, {"ID Produto", Int64.Type}, {"Produto e Categoria", type text}, {"Quantidade", Int64.Type}, {"Preço Unitário", type number}, {"-", type any}, {"Preço Total", type number}, {"Método de Pagamento", type text}, {"Canal", type text}}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Tipo Alterado",{{"Data da Venda", type date}, {"Preço Unitário", Currency.Type}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Tipo Alterado1",{"-"}),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Colunas Removidas",{{"Preço Total", Currency.Type}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado2",{{"Método de Pagamento", Text.Proper, type text}}),
+				    #"Dividir Coluna por Delimitador" = Table.SplitColumn(#"Colocar Cada Palavra Em Maiúscula", "Produto e Categoria", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), {"Produto e Categoria.1", "Produto e Categoria.2"}),
+				    #"Tipo Alterado3" = Table.TransformColumnTypes(#"Dividir Coluna por Delimitador",{{"Produto e Categoria.1", type text}, {"Produto e Categoria.2", type text}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado3",{{"Produto e Categoria.1", "Produto"}, {"Produto e Categoria.2", "Categoria"}})
+				in
+				    #"Colunas Renomeadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
