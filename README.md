@@ -1,6 +1,5 @@
-# Analise-de-vendas
-Projeto do Power bi para uma análise simples 
+# Listas de dashbordas
 
-Segue uama imagem do layout desenvolvido
-![Layout](https://github.com/IgBarreto/Analise-de-vendas/blob/main/Layout.png?raw=true)
+## Análise de vendas
+![Layout](https://github.com/IgBarreto/Analise-de-vendas/blob/main/An%C3%A1lise%20de%20vendas/Layout.png?raw=true)
  
