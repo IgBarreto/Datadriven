@@ -3,68 +3,250 @@ table Medidas
 
 	measure 'Soma Qtd' = Sum(TF_PEDIDOS[Quantidade])
 		formatString: 0
+		displayFolder: Agregação
 		lineageTag: e8bc2068-db34-4d62-899b-7a2d376d46c7
 
 	measure 'Média Vendas' = AVERAGEX(TF_PEDIDOS,TF_PEDIDOS[Quantidade]* TF_PEDIDOS[Preço Unitário])
+		displayFolder: Agregação
 		lineageTag: ca57056b-3f91-491f-a159-1330c5207fc2
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Qtd Pedidos' = DISTINCTCOUNT(TF_PEDIDOS[Código do Pedido])
 		formatString: 0
+		displayFolder: Agregação
 		lineageTag: 7f120193-4960-43ba-ad2f-d2693154dda8
 
 	measure 'Soma Metas' = SUM(TF_METAS[Valor])
 		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		displayFolder: Agregação
 		lineageTag: 442f05c3-a0e1-41e9-aac7-6113a8d5ab94
 
 		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
 
 	measure 'Soma Vendas' = SUMX(TF_PEDIDOS,TF_PEDIDOS[Quantidade]* TF_PEDIDOS[Preço Unitário])
 		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		displayFolder: Agregação
 		lineageTag: d1b2c127-e03e-447a-abb8-d867f76c441a
 
 		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
 
 	measure 'Maior Venda' = MAXX(TF_PEDIDOS,TF_PEDIDOS[Quantidade]* TF_PEDIDOS[Preço Unitário])
 		formatString: 0
+		displayFolder: Agregação
 		lineageTag: 639d0f4a-cddc-4396-9754-9d3ae0229675
 
 	measure 'Menor Venda' = MINX(TF_PEDIDOS,TF_PEDIDOS[Quantidade]* TF_PEDIDOS[Preço Unitário])
 		formatString: 0
+		displayFolder: Agregação
 		lineageTag: 97a346cd-28f8-40d9-9a25-42b189b6427f
 
 	measure '% Vendas VS Metas' = [Soma Vendas]/[Soma Metas]
 		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Percentuais
 		lineageTag: e40fb457-c5e1-40c1-803f-87c6a8ad3eb4
 
-	measure 'Soma qtd SP' = CALCULATE([Soma Qtd],TD_LOJA[UF]=="SP")
+	measure 'Soma Qtd SP' = CALCULATE([Soma Qtd],TD_LOJA[UF]=="SP")
 		formatString: 0
+		displayFolder: Filtros
 		lineageTag: f1a345b5-fe51-4a70-af76-15c5366c082d
 
-	measure '% sobre SP' = DIVIDE([Soma Qtd],[Soma qtd SP])
+	measure '% sobre SP' = DIVIDE([Soma Qtd],[Soma Qtd SP])
 		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Percentuais
 		lineageTag: 99bd1f42-891f-4875-a11f-05a842aaedd4
 
-	column 'Coluna 1'
-		dataType: string
-		isHidden
-		lineageTag: a7d44238-ad0f-4cb6-ae80-2521305bfed9
-		summarizeBy: none
-		sourceColumn: Coluna 1
+	measure 'filtro SP e MG' = CALCULATE([Soma Qtd],OR(TD_LOJA[UF]="SP",TD_LOJA[UF]="MG"))
+		formatString: 0
+		displayFolder: Filtros
+		lineageTag: e2b59c08-5a4c-40a3-a49e-995a81284a10
 
-		changedProperty = IsHidden
+	measure 'filtro SP/JOGOS' = CALCULATE([Soma Qtd],TD_LOJA[UF]="SP",TD_CATEGORIA[Categoria]="Jogos")
+		formatString: 0
+		displayFolder: Filtros
+		lineageTag: 7d565b9f-2608-4659-a8b6-a3b4d2dfd091
 
-		annotation SummarizationSetBy = Automatic
+	measure 'Soma Qtd Total' = CALCULATE([Soma Qtd],ALL(TD_LOJA))
+		formatString: 0
+		displayFolder: Filtros
+		lineageTag: 9d8f5e20-c9d8-469f-9564-becb1bac4dc3
+
+	measure '% do Total' = DIVIDE([Soma Qtd],[Soma Qtd Total])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Percentuais
+		lineageTag: 7cd770e5-1423-4551-98c7-b8f76f6a27d5
+
+	measure 'Soma Qtd Total 2' = CALCULATE([Soma Qtd],ALL(TF_PEDIDOS))
+		formatString: 0
+		displayFolder: Filtros
+		lineageTag: 6c838458-16a6-40b3-857a-759bb4f74a83
+
+	measure 'Soma Qtd Total 3' = CALCULATE([Soma Qtd],ALLSELECTED(TF_PEDIDOS))
+		formatString: 0
+		displayFolder: Filtros
+		lineageTag: 9d8d3563-8d9d-4aef-91c5-934b9159dc90
+
+	measure '% do Subtotal' = DIVIDE([Soma Qtd],[Soma Qtd Total 3])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Percentuais
+		lineageTag: 7a637014-aa80-4727-aad0-be9c5e0b8fcc
+
+	measure '% Total Vendas' = DIVIDE( [Soma Vendas], CALCULATE([Soma Vendas],ALL(TF_PEDIDOS)))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Percentuais
+		lineageTag: 61e67d99-784a-4587-932f-f324f3fa1ec1
+
+	measure '% Subtotal Vendas' = DIVIDE([Soma Vendas], CALCULATE([Soma Vendas],ALLSELECTED(TF_PEDIDOS)))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Percentuais
+		lineageTag: 73d84b34-ba24-4d2e-a146-5f81a29b6851
+
+	measure 'Soma Vendas Ano Anterior' = CALCULATE([Soma Vendas],SAMEPERIODLASTYEAR(TD_CALENDARIO[Data]))
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: 3694614f-2b28-4d01-9414-fa95024867e5
+
+	measure '% Ano VS Ano Anteriror (YoY)' = DIVIDE([Soma Vendas],[Soma Vendas Ano Anterior])
+		formatString: 0%;-0%;0%
+		displayFolder: Inteligência de Tempo
+		lineageTag: 09648146-ba86-4857-b6d9-815a27f15ad5
+
+	measure 'Var. Ano Atual VS Ano Anterior' =
+			
+			DIVIDE([Soma Vendas],[Soma Vendas Ano Anterior],1)-1
+		formatString: 0%;-0%;0%
+		displayFolder: Inteligência de Tempo
+		lineageTag: f069b5c2-fed5-4167-a3da-626fbe039f04
+
+	measure 'Soma Vendas Ano Anterior 2' = ```
+			
+			 CALCULATE(
+			    [Soma Vendas],
+			    DATEADD(TD_CALENDARIO[Data],-1,YEAR)
+			)
+			```
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: 902089c7-719f-4b0b-986a-417991684253
+
+	measure 'Soma Vendas Trim. Anteriror' =
+			
+			
+			CALCULATE([Soma Vendas],DATEADD(TD_CALENDARIO[Data],-1,QUARTER))
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: 9be94d59-a88e-41f5-82f5-dd5454b84fd3
+
+	measure 'Soma Vendas Mês Anteriror' =
+			
+			CALCULATE([Soma Vendas],DATEADD(TD_CALENDARIO[Data],-1,MONTH))
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: 5d40a7e3-4749-4bf5-af04-09f2a9cef5c1
+
+	measure 'Soma móvel 12M' =
+			
+			CALCULATE(
+			    [Soma Vendas],
+			    DATESINPERIOD(
+			        TD_CALENDARIO[Data],
+			        MAX(TD_CALENDARIO[Data]),-12,MONTH))
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: 737fbff9-f479-40ac-a5a0-4a81d796f781
+
+	measure 'Soma móvel 3M' =
+			
+			CALCULATE(
+			    [Soma Vendas],
+			    DATESINPERIOD(
+			        TD_CALENDARIO[Data],
+			        MAX(TD_CALENDARIO[Data]),-3,MONTH))
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: fde9b2e2-4567-4513-82e7-b6e0fe639f1b
+
+	measure 'Soma Móvel 30D' =
+			
+			CALCULATE(
+			    [Soma Vendas],
+			    DATESBETWEEN(
+			        TD_CALENDARIO[Data],
+			        MAX(TD_CALENDARIO[Data])-29,
+			        MAX(TD_CALENDARIO[Data])
+			    )
+			)
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: 0b561715-b048-4ddf-a85e-d4317753f575
+
+	measure 'Soma Acumulada' = TOTALYTD([Soma Vendas],TD_CALENDARIO[Data])
+		formatString: #,0
+		displayFolder: Inteligência de Tempo
+		lineageTag: d0ba5cf6-54e6-4927-a307-b476389afb26
+
+	measure 'Soma Receita' = SUM(TF_FINANCEIRO[Receita])
+		formatString: 0
+		displayFolder: Agregação
+		lineageTag: 0513260f-2046-4e41-b1d1-166f1d1481b7
+
+	measure 'Soma Receita (FC)' =
+			CALCULATE(
+			    [Soma Receita],
+			    USERELATIONSHIP(TD_CALENDARIO[Data],TF_FINANCEIRO[Data Extrato])
+			)
+		formatString: 0
+		displayFolder: Agregação
+		lineageTag: f14c3082-e96f-4c8d-9dc2-a48c6cee2210
+
+	measure Tendência =
+			
+			IF(
+			    HASONEVALUE(TD_PRODUTOS[Produto]),
+			    IF([Soma Qtd]>10000,"Alta","Baixa")
+			)
+		displayFolder: Lógica
+		lineageTag: 5eeca890-b767-427d-96a6-b83740955590
+
+	measure 'Classificação ABC' =
+			
+			IF(
+			    HASONEVALUE(TD_PRODUTOS[Produto]),
+			    SWITCH(
+			        TRUE(),
+			        [Soma Qtd]>10000,"A",
+			        [Soma Qtd]>5000,"B",
+			        [Soma Qtd]>0,"C"
+			    ),
+			    BLANK()
+			)
+		displayFolder: Lógica
+		lineageTag: dc81f46f-5b5c-4aba-8d59-f8514a8dff32
+
+	measure Classificação =
+			IF(HASONEVALUE(TD_PRODUTOS[Produto]), SWITCH(
+			    TRUE(),
+			    [Soma Qtd]>10000,"🟢",
+			    [Soma Qtd]>5000,"🟡",
+			    [Soma Qtd]>0,"🔴"
+			),BLANK())
+		displayFolder: Lógica
+		lineageTag: f4db69e2-2f10-4117-8deb-8e97ed2d1808
+
+	measure 'Cor Gráfico Produto' = IF([Soma Qtd]>10000,"#744EC2","#FFB300")
+		displayFolder: Lógica
+		lineageTag: b7f934ac-5a72-49bf-bcfe-bb953278bea3
 
 	partition Medidas = m
 		mode: import
 		source =
 				let
 				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
-				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}})
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"Coluna 1", "."}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Colunas Renomeadas",{"."})
 				in
-				    #"Tipo Alterado"
+				    #"Colunas Removidas"
 
 	annotation PBI_ResultType = Table
 

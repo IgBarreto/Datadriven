@@ -1,0 +1,75 @@
+table TF_FINANCEIRO
+	lineageTag: 3d9301e8-d5b3-439e-8781-320967638d97
+
+	column 'Data Contabil'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a01db43c-4589-475f-9143-3622c0306ead
+		summarizeBy: none
+		sourceColumn: Data Contabil
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Data Extrato'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8b47d7c7-cb2a-4716-bd79-22332fd38eb5
+		summarizeBy: none
+		sourceColumn: Data Extrato
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Departamento
+		dataType: string
+		lineageTag: df93b4e8-126a-4657-bc24-d28525f8d623
+		summarizeBy: none
+		sourceColumn: Departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Receita
+		dataType: int64
+		formatString: 0
+		lineageTag: 5918a683-643a-46f3-a5d8-3302a2701ada
+		summarizeBy: sum
+		sourceColumn: Receita
+
+		annotation SummarizationSetBy = Automatic
+
+	column Despesa
+		dataType: int64
+		formatString: 0
+		lineageTag: daea325f-a5f1-4a2e-bd00-29f42bb63412
+		summarizeBy: sum
+		sourceColumn: Despesa
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Categoria de Despesa'
+		dataType: string
+		lineageTag: bf29310f-d72c-4499-a27f-6617968fccf6
+		summarizeBy: none
+		sourceColumn: Categoria de Despesa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TF_FINANCEIRO = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("\\wsl.localhost\Ubuntu\home\igbarreto\courses\datadriven\Datadriven\02 - DataToys\DadoseIcones\Fluxo de Caixa.csv"),[Delimiter=";", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Data Contabil", type date}, {"Data Extrato", type date}, {"Departamento", type text}, {"Receita", Int64.Type}, {"Despesa", Int64.Type}, {"Categoria de Despesa", type text}})
+				in
+				    #"Tipo Alterado"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
