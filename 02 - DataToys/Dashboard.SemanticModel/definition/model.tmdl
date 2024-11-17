@@ -19,7 +19,7 @@ annotation PBI_ProTooling = ["DevMode"]
 
 annotation PBIDesktopVersion = 2.138.782.0 (24.11)
 
-annotation PBI_QueryOrder = ["Fornecedores","TD_LOJA","TD_PRODUTOS","TF_METAS","OrigemFornecedores","TF_PEDIDOS","Parâmetro1","Transformar o Arquivo de Exemplo","Arquivo de Amostra","Transformar Arquivo","Pasta dos arquivos","TD_CATEGORIA","Medidas"]
+annotation PBI_QueryOrder = ["Fornecedores","TD_LOJA","TD_PRODUTOS","TF_METAS","OrigemFornecedores","TF_PEDIDOS","Parâmetro1","Transformar o Arquivo de Exemplo","Arquivo de Amostra","Transformar Arquivo","Pasta dos arquivos","TD_CATEGORIA","Medidas","TF_FINANCEIRO"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -32,6 +32,7 @@ ref table TD_CATEGORIA
 ref table Medidas
 ref table TD_CALENDARIO
 ref table LocalDateTable_d7230abf-8f53-41c8-ac54-9beea1333fc8
+ref table TF_FINANCEIRO
 
 ref cultureInfo pt-BR
 

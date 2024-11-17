@@ -44,6 +44,12 @@ table TD_CALENDARIO
 
 		annotation SummarizationSetBy = Automatic
 
+	column Mês/Ano = FORMAT(TD_CALENDARIO[Data],"mmm/yyyy")
+		lineageTag: 4559efd2-89c8-4460-9da7-1911fe6f2149
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition TD_CALENDARIO = calculated
 		mode: import
 		source = CALENDARAUTO()

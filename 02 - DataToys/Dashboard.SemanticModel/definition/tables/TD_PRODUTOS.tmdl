@@ -52,6 +52,21 @@ table TD_PRODUTOS
 
 		annotation SummarizationSetBy = Automatic
 
+	column Grupo =
+			SWITCH(
+			    TD_PRODUTOS[Categoria],
+			    "Bonecas","Fofinhos",
+			    "Pelucias","Fofinhos",
+			    "Blocos de Monttar","Raciocínio",
+			    "Jogos","Raciocínio",
+			    "Carrinhos","Ação",
+			    "Sem classificação"
+			)
+		lineageTag: 1bb2cd62-f555-405d-83d2-db6dfcb32c64
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition TD_PRODUTOS = m
 		mode: import
 		source =

@@ -31,3 +31,12 @@ relationship 4908b243-714c-eb21-f1ae-967b6244b4aa
 	fromColumn: TF_PEDIDOS.Data
 	toColumn: TD_CALENDARIO.Data
 
+relationship d946ec60-ee42-0b44-ab9b-2eee251655a3
+	fromColumn: TF_FINANCEIRO.'Data Contabil'
+	toColumn: TD_CALENDARIO.Data
+
+relationship 0a493fb4-1ffd-f593-00ae-c0e40e2f3bb9
+	isActive: false
+	fromColumn: TF_FINANCEIRO.'Data Extrato'
+	toColumn: TD_CALENDARIO.Data
+
