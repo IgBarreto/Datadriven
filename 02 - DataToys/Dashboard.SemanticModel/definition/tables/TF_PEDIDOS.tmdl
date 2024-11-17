@@ -111,8 +111,6 @@ table TF_PEDIDOS
 				in
 				    #"Colunas Renomeadas2"
 
-	changedProperty = Name
-
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Table
