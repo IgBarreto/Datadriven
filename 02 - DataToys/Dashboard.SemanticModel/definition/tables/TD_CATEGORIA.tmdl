@@ -1,0 +1,33 @@
+table TD_CATEGORIA
+	lineageTag: a60a5c92-cca1-455d-b039-f32f6c37615d
+
+	column Categoria
+		dataType: string
+		lineageTag: e096aa1e-cfe2-45f0-84de-60a009294860
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TD_CATEGORIA = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents(#"Pasta dos arquivos" & "Produtos.xlsx"), null, true),
+				    Planilha1_Sheet = Fonte{[Item="Planilha1",Kind="Sheet"]}[Data],
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Planilha1_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"ID Produto", Int64.Type}, {"Produto", type text}, {"Categoria", type text}}),
+				    #"Preenchido Abaixo" = Table.FillDown(#"Tipo Alterado",{"Categoria"}),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Preenchido Abaixo", {"ID Produto"}, Fornecedores, {"ID Produto"}, "Fornecedores", JoinKind.LeftOuter),
+				    #"Fornecedores Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "Fornecedores", {"Fornecedor", "Origem"}, {"Fornecedor", "Origem"}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Fornecedores Expandido",{"Categoria"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas")
+				in
+				    #"Duplicatas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

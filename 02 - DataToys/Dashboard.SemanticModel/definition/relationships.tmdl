@@ -1,0 +1,33 @@
+relationship c4022a6f-6047-611d-ee7c-4e1842d746cd
+	fromColumn: TF_PEDIDOS.'ID Produto'
+	toColumn: TD_PRODUTOS.'ID Produto'
+
+relationship b1bdc066-6476-7d5a-fdc6-5af09c374deb
+	fromColumn: TF_PEDIDOS.'ID Loja'
+	toColumn: TD_LOJA.ID
+
+relationship 64c2e89f-d03c-49b2-d259-5a0ce17195ac
+	fromColumn: TF_METAS.Loja
+	toColumn: TD_LOJA.LOJA
+
+relationship AutoDetected_bc48202f-73a2-4af8-8c59-b39f3b093575
+	fromColumn: TD_PRODUTOS.Categoria
+	toColumn: TD_CATEGORIA.Categoria
+
+relationship AutoDetected_6dfe79a9-72c5-4060-a1c8-c1c11f6b9d1e
+	fromColumn: TF_METAS.Categoria
+	toColumn: TD_CATEGORIA.Categoria
+
+relationship cbdcaad6-0206-4c42-a2a4-f704c175bb01
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TD_CALENDARIO.Data
+	toColumn: LocalDateTable_d7230abf-8f53-41c8-ac54-9beea1333fc8.Date
+
+relationship 25203826-2e8f-af05-21ea-b63d3b0b267c
+	fromColumn: TF_METAS.Data
+	toColumn: TD_CALENDARIO.Data
+
+relationship 4908b243-714c-eb21-f1ae-967b6244b4aa
+	fromColumn: TF_PEDIDOS.Data
+	toColumn: TD_CALENDARIO.Data
+

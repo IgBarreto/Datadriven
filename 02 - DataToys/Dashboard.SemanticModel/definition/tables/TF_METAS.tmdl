@@ -1,0 +1,72 @@
+table TF_METAS
+	lineageTag: bcb02e80-e1e2-44ba-bb51-b7c44a3f4a9f
+
+	column Loja
+		dataType: string
+		lineageTag: 864c0ee9-4bf4-4d53-bd99-7d5707362978
+		summarizeBy: none
+		sourceColumn: Loja
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: 7882cb93-33d2-4dfb-b983-09763247ae67
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 594decc5-f3a9-46f2-8723-9cb8df329059
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Valor
+		dataType: decimal
+		lineageTag: b5828e57-8113-47a4-9214-0a015a92e1ca
+		summarizeBy: sum
+		sourceColumn: Valor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition TF_METAS = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents(#"Pasta dos arquivos" & "Metas.xlsx"), null, true),
+				    Planilha1_Sheet = Fonte{[Item="Planilha1",Kind="Sheet"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Planilha1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type any}, {"Column4", type any}, {"Column5", type any}, {"Column6", type any}, {"Column7", type any}, {"Column8", type any}, {"Column9", type any}, {"Column10", type any}, {"Column11", type any}, {"Column12", type any}, {"Column13", type any}, {"Column14", type any}, {"Column15", type any}, {"Column16", type any}, {"Column17", type any}, {"Column18", type any}, {"Column19", type any}, {"Column20", type any}, {"Column21", type any}, {"Column22", type any}, {"Column23", type any}, {"Column24", type any}, {"Column25", type any}, {"Column26", type any}, {"Column27", type any}, {"Column28", type any}, {"Column29", type any}, {"Column30", type any}, {"Column31", type any}, {"Column32", type any}, {"Column33", type any}, {"Column34", type any}, {"Column35", type any}, {"Column36", type any}, {"Column37", type any}, {"Column38", type any}, {"Column39", type any}, {"Column40", type any}, {"Column41", type any}}),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Tipo Alterado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Loja", type text}, {"Categoria", type text}, {"jan, 2021", type number}, {"fev, 2021", type number}, {"mar, 2021", type number}, {"abr, 2021", type number}, {"mai, 2021", type number}, {"jun, 2021", type number}, {"jul, 2021", type number}, {"ago, 2021", type number}, {"set, 2021", type number}, {"out, 2021", type number}, {"nov, 2021", type number}, {"dez, 2021", type number}, {"2021 Total", type number}, {"jan, 2022", type number}, {"fev, 2022", type number}, {"mar, 2022", type number}, {"abr, 2022", type number}, {"mai, 2022", type number}, {"jun, 2022", type number}, {"jul, 2022", type number}, {"ago, 2022", type number}, {"set, 2022", type number}, {"out, 2022", type number}, {"nov, 2022", type number}, {"dez, 2022", type number}, {"2022 Total", type number}, {"jan, 2023", type number}, {"fev, 2023", type number}, {"mar, 2023", type number}, {"abr, 2023", type number}, {"mai, 2023", type number}, {"jun, 2023", type number}, {"jul, 2023", type number}, {"ago, 2023", type number}, {"set, 2023", type number}, {"out, 2023", type number}, {"nov, 2023", type number}, {"dez, 2023", type number}, {"2023 Total", type number}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado1", each ([Loja] <> null)),
+				    #"Outras Colunas Não Dinâmicas" = Table.UnpivotOtherColumns(#"Linhas Filtradas", {"Loja", "Categoria"}, "Atributo", "Valor"),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Outras Colunas Não Dinâmicas",{{"Atributo", "Data"}}),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Colunas Renomeadas",{{"Data", type date}}),
+				    #"Erros Removidos" = Table.RemoveRowsWithErrors(#"Tipo Alterado2", {"Data"}),
+				    #"Tipo Alterado3" = Table.TransformColumnTypes(#"Erros Removidos",{{"Valor", Currency.Type}})
+				in
+				    #"Tipo Alterado3"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

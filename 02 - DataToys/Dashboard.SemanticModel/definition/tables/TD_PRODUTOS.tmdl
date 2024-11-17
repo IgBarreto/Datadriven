@@ -1,0 +1,74 @@
+table TD_PRODUTOS
+	lineageTag: 18e6c64b-269e-45a9-afbd-a663c5ffab2a
+
+	column 'ID Produto'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8eb29fca-410d-44b5-aeb1-b30f266fc607
+		summarizeBy: none
+		sourceColumn: ID Produto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produto
+		dataType: string
+		lineageTag: 51a2886e-5b4d-42f2-ba85-3baee0aa7d01
+		summarizeBy: none
+		sourceColumn: Produto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: 991b896e-9888-4eb0-868f-ab0a5d59be0e
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fornecedor
+		dataType: string
+		lineageTag: 0cb81a83-cee7-4762-9372-9fe5f20f803e
+		summarizeBy: none
+		sourceColumn: Fornecedor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origem
+		dataType: string
+		lineageTag: 1899f015-a9af-4153-b142-e2756d390600
+		summarizeBy: none
+		sourceColumn: Origem
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TD_PRODUTOS = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents(#"Pasta dos arquivos" & "Produtos.xlsx"), null, true),
+				    Planilha1_Sheet = Fonte{[Item="Planilha1",Kind="Sheet"]}[Data],
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Planilha1_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"ID Produto", Int64.Type}, {"Produto", type text}, {"Categoria", type text}}),
+				    #"Preenchido Abaixo" = Table.FillDown(#"Tipo Alterado",{"Categoria"}),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Preenchido Abaixo", {"ID Produto"}, Fornecedores, {"ID Produto"}, "Fornecedores", JoinKind.LeftOuter),
+				    #"Fornecedores Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "Fornecedores", {"Fornecedor", "Origem"}, {"Fornecedor", "Origem"})
+				in
+				    #"Fornecedores Expandido"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

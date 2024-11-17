@@ -1,0 +1,69 @@
+table TD_LOJA
+	lineageTag: d16b4bd6-93d3-472f-8207-ff7606b719b6
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 5086a671-de36-40cc-a034-863974812114
+		summarizeBy: none
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LOJA
+		dataType: string
+		lineageTag: e14becc5-f4e5-4b12-afac-330c02a4c06e
+		summarizeBy: none
+		sourceColumn: LOJA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UF
+		dataType: string
+		lineageTag: c735123b-02ac-4a25-bb26-b685e3ce2ffc
+		summarizeBy: none
+		sourceColumn: UF
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Região
+		dataType: string
+		lineageTag: 99bc445f-686b-4004-8160-0c702f5e0217
+		summarizeBy: none
+		sourceColumn: Região
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TD_LOJA = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(#"Pasta dos arquivos" & "Lojas.txt"),[Delimiter="#(tab)", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Linhas Superiores Removidas" = Table.Skip(#"Tipo Alterado",5),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Linhas Superiores Removidas", [PromoteAllScalars=true]),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"ID Loja", Int64.Type}, {"Loja", type text}, {"                UF", type text}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado1",{{"ID Loja", "ID"}, {"Loja", "LOJA"}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Colunas Renomeadas",{{"LOJA", Text.Proper, type text}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Colocar Cada Palavra Em Maiúscula"," ","",Replacer.ReplaceText,{"                UF"}),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Valor Substituído", "Personalizar", each if [#"                UF"] = "RJ" then "Sudeste" else if [#"                UF"] = "SP" then "Sudeste" else if [#"                UF"] = "MG" then "Sudeste" else if [#"                UF"] = "BA" then "Nordeste" else if [#"                UF"] = "PR" then "Sul" else null),
+				    #"Colunas Renomeadas1" = Table.RenameColumns(#"Coluna Condicional Adicionada",{{"Personalizar", "Região"}}),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Colunas Renomeadas1",{{"Região", type text}}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Tipo Alterado2","Fábrica De Diversão","Fábrica de Diversão",Replacer.ReplaceText,{"LOJA"}),
+				    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","Paraíso Dos Brinquedos","Paraíso dos Brinquedos",Replacer.ReplaceText,{"LOJA"}),
+				    #"Colunas Renomeadas2" = Table.RenameColumns(#"Valor Substituído2",{{"                UF", "UF"}})
+				in
+				    #"Colunas Renomeadas2"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

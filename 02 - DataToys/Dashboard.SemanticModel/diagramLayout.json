@@ -4,14 +4,109 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
+        "x": 292.88583313937437,
         "y": 0
       },
-      "nodes": [],
+      "nodes": [
+        {
+          "location": {
+            "x": 635.85428571694172,
+            "y": 190.00805488279923
+          },
+          "nodeIndex": "TD_LOJA",
+          "nodeLineageTag": "d16b4bd6-93d3-472f-8207-ff7606b719b6",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 335.18634405831284,
+            "y": 437.92962453551741
+          },
+          "nodeIndex": "TD_PRODUTOS",
+          "nodeLineageTag": "18e6c64b-269e-45a9-afbd-a663c5ffab2a",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 2,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 903.46536647787832,
+            "y": 16.506788519215647
+          },
+          "nodeIndex": "TF_METAS",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3,
+          "expandedHeight": 176
+        },
+        {
+          "location": {
+            "x": 335.62009324549717,
+            "y": 3.1709995812875036
+          },
+          "nodeIndex": "TF_PEDIDOS",
+          "nodeLineageTag": "fd8a11b0-f3b5-4f87-857b-4ac0cfe6448b",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 6,
+          "expandedHeight": 248
+        },
+        {
+          "location": {
+            "x": 1159.5136485176452,
+            "y": 439.70161645405091
+          },
+          "nodeIndex": "TD_CATEGORIA",
+          "nodeLineageTag": "a60a5c92-cca1-455d-b039-f32f6c37615d",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1244.2160032348136,
+            "y": 0
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "4be8bfbe-ac2d-4f83-8351-b7adec4ab5d8",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1163.6308446586561,
+            "y": 122.33917269169555
+          },
+          "nodeIndex": "TD_CALENDARIO",
+          "nodeLineageTag": "7e157d47-2c3d-466f-aab3-07837470a426",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
       "name": "Todas as tabelas",
-      "zoomValue": 100,
-      "pinKeyFieldsToTop": false,
-      "showExtraHeaderInfo": false,
+      "zoomValue": 79.553182037699742,
+      "pinKeyFieldsToTop": true,
+      "showExtraHeaderInfo": true,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
     }

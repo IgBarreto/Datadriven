@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.60\",\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.60\",\"type\":2}},\"activeSectionIndex\":1,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -20,12 +20,73 @@
   "sections": [
     {
       "config": "{}",
-      "displayName": "Página 1",
+      "displayName": "AGREGAÇÃO",
       "displayOption": 1,
       "filters": "[]",
       "height": 720.00,
       "name": "667bba85cda408298fd5",
-      "visualContainers": [],
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"c4e4d61bc6063c659827\",\"layouts\":[{\"id\":0,\"position\":{\"x\":126.66666666666667,\"y\":190,\"z\":0,\"width\":801.6666666666667,\"height\":280,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"TD_CATEGORIA.Categoria\"},{\"queryRef\":\"Medidas.Soma Qtd\"},{\"queryRef\":\"Medidas.Média Vendas\"},{\"queryRef\":\"Medidas.Qtd Pedidos\"},{\"queryRef\":\"Medidas.Soma Meta\"},{\"queryRef\":\"Medidas.Soma Vendas\"},{\"queryRef\":\"Medidas.Mairo Venda\"},{\"queryRef\":\"Medidas.Menor Venda\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"TD_CATEGORIA\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"Medidas\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Categoria\"},\"Name\":\"TD_CATEGORIA.Categoria\",\"NativeReferenceName\":\"Categoria\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Qtd\"},\"Name\":\"Medidas.Soma Qtd\",\"NativeReferenceName\":\"Soma Qtd\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Média Vendas\"},\"Name\":\"Medidas.Média Vendas\",\"NativeReferenceName\":\"Média Vendas\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Qtd Pedidos\"},\"Name\":\"Medidas.Qtd Pedidos\",\"NativeReferenceName\":\"Qtd Pedidos\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Metas\"},\"Name\":\"Medidas.Soma Meta\",\"NativeReferenceName\":\"Soma Meta\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Vendas\"},\"Name\":\"Medidas.Soma Vendas\",\"NativeReferenceName\":\"Soma Vendas\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Maior Venda\"},\"Name\":\"Medidas.Mairo Venda\",\"NativeReferenceName\":\"Mairo Venda\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Menor Venda\"},\"Name\":\"Medidas.Menor Venda\",\"NativeReferenceName\":\"Menor Venda\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Metas\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 280.00,
+          "width": 801.67,
+          "x": 126.67,
+          "y": 190.00,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
+      "displayName": "COMPARAÇÃO",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "e338d39f78b2e2d2e667",
+      "ordinal": 1,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"3fe782483d1c0ce49ec9\",\"layouts\":[{\"id\":0,\"position\":{\"x\":140,\"y\":220,\"z\":2,\"width\":425,\"height\":140,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Values\":[{\"queryRef\":\"Medidas.Soma Vendas\"},{\"queryRef\":\"Medidas.Soma Metas\"},{\"queryRef\":\"Medidas.% Vendas VS Metas\"}],\"Rows\":[{\"queryRef\":\"TD_CALENDARIO.Ano\",\"active\":true},{\"queryRef\":\"TD_CALENDARIO.Nome do mês\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"Medidas\",\"Type\":0},{\"Name\":\"t\",\"Entity\":\"TD_CALENDARIO\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Vendas\"},\"Name\":\"Medidas.Soma Vendas\",\"NativeReferenceName\":\"Soma Vendas\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Metas\"},\"Name\":\"Medidas.Soma Metas\",\"NativeReferenceName\":\"Soma Metas\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"% Vendas VS Metas\"},\"Name\":\"Medidas.% Vendas VS Metas\",\"NativeReferenceName\":\"% Vendas VS Metas\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Ano\"},\"Name\":\"TD_CALENDARIO.Ano\",\"NativeReferenceName\":\"Ano\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Nome do mês\"},\"Name\":\"TD_CALENDARIO.Nome do mês\",\"NativeReferenceName\":\"Nome do mês\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Metas\"}}}]},\"expansionStates\":[{\"roles\":[\"Rows\"],\"levels\":[{\"queryRefs\":[\"TD_CALENDARIO.Ano\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"TD_CALENDARIO\"}},\"Property\":\"Ano\"}}],\"isPinned\":true},{\"queryRefs\":[\"TD_CALENDARIO.Nome do mês\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null}}],\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 140.00,
+          "width": 425.00,
+          "x": 140.00,
+          "y": 220.00,
+          "z": 2.00
+        },
+        {
+          "config": "{\"name\":\"df88d26c20984a4757ab\",\"layouts\":[{\"id\":0,\"position\":{\"x\":140,\"y\":20,\"width\":425,\"height\":150,\"z\":3,\"tabOrder\":3}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"TD_CATEGORIA.Categoria\"},{\"queryRef\":\"Medidas.Soma Vendas\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"TD_CATEGORIA\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"Medidas\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"Categoria\"},\"Name\":\"TD_CATEGORIA.Categoria\",\"NativeReferenceName\":\"Categoria\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Vendas\"},\"Name\":\"Medidas.Soma Vendas\",\"NativeReferenceName\":\"Soma Vendas\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 150.00,
+          "width": 425.00,
+          "x": 140.00,
+          "y": 20.00,
+          "z": 3.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
+      "displayName": "CALCULATE",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "e6d31bc70a32f3337d08",
+      "ordinal": 2,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"a42cfbd814a250aaa1c9\",\"layouts\":[{\"id\":0,\"position\":{\"x\":190,\"y\":187.14285714285717,\"z\":0,\"width\":752.8571428571429,\"height\":280,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"TD_LOJA.                UF\"},{\"queryRef\":\"Medidas.Soma Qtd\"},{\"queryRef\":\"Medidas.Soma qtd SP\"},{\"queryRef\":\"Medidas.% sobre SP\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"t\",\"Entity\":\"TD_LOJA\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"Medidas\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"t\"}},\"Property\":\"UF\"},\"Name\":\"TD_LOJA.                UF\",\"NativeReferenceName\":\"UF\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma Qtd\"},\"Name\":\"Medidas.Soma Qtd\",\"NativeReferenceName\":\"Soma Qtd\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"Soma qtd SP\"},\"Name\":\"Medidas.Soma qtd SP\",\"NativeReferenceName\":\"Soma qtd SP\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"% sobre SP\"},\"Name\":\"Medidas.% sobre SP\",\"NativeReferenceName\":\"% sobre SP\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"104.68889307511438D\"}}}},\"selector\":{\"metadata\":\"TD_LOJA.                UF\"}}],\"grid\":[{\"properties\":{\"textSize\":{\"expr\":{\"Literal\":{\"Value\":\"14D\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 280.00,
+          "width": 752.86,
+          "x": 190.00,
+          "y": 187.14,
+          "z": 0.00
+        }
+      ],
       "width": 1280.00
     }
   ]

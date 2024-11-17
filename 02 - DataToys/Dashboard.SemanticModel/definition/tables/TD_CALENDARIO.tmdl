@@ -1,0 +1,52 @@
+table TD_CALENDARIO
+	lineageTag: 7e157d47-2c3d-466f-aab3-07837470a426
+
+	column Data
+		formatString: Short Date
+		lineageTag: eea14ef6-da37-4b23-9e8c-933329c3134c
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: cbdcaad6-0206-4c42-a2a4-f704c175bb01
+			defaultHierarchy: LocalDateTable_d7230abf-8f53-41c8-ac54-9beea1333fc8.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano = Year(TD_CALENDARIO[Data])
+		formatString: 0
+		lineageTag: ac66ab5c-1c13-4ca7-ae61-61d248ac5639
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês = MONTH(TD_CALENDARIO[Data])
+		formatString: 0
+		lineageTag: d4ff2774-49b3-4e9f-ab4c-54bc460dd4ee
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = Day(TD_CALENDARIO[Data])
+		formatString: 0
+		lineageTag: ad4af625-1306-40af-883b-fba31c953b70
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do mês' = FORMAT(TD_CALENDARIO[Data],"MMM")
+		lineageTag: b529b795-9d36-429b-b860-eb17f688ebab
+		summarizeBy: none
+		sortByColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TD_CALENDARIO = calculated
+		mode: import
+		source = CALENDARAUTO()
+
+	annotation PBI_Id = 5324e25c1f7446dfacbcabbee2306941
+

@@ -1,0 +1,119 @@
+table TF_PEDIDOS
+	lineageTag: fd8a11b0-f3b5-4f87-857b-4ac0cfe6448b
+
+	column 'Código do Pedido'
+		dataType: int64
+		formatString: 0
+		lineageTag: 209d6a0f-1d97-49c7-b4c8-8765a9cf0590
+		summarizeBy: sum
+		sourceColumn: Código do Pedido
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e1a0a7f7-bd93-4afb-8e87-e04e9a58681d
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'ID Produto'
+		dataType: int64
+		formatString: 0
+		lineageTag: c0c88f70-05a1-4931-97bd-2255d571a29b
+		summarizeBy: none
+		sourceColumn: ID Produto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Loja'
+		dataType: int64
+		formatString: 0
+		lineageTag: 71d7dd6c-6d7e-4be2-994c-7a410e97ef5b
+		summarizeBy: none
+		sourceColumn: ID Loja
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantidade
+		dataType: int64
+		formatString: 0
+		lineageTag: 25a1c6e7-e26c-40da-af6c-afbf7ea43423
+		summarizeBy: sum
+		sourceColumn: Quantidade
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Preço Unitário'
+		dataType: int64
+		formatString: 0
+		lineageTag: 331048bc-d3e7-4e91-a0f7-b9e4d81e5b4a
+		summarizeBy: sum
+		sourceColumn: Preço Unitário
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Venda'
+		dataType: string
+		lineageTag: 74dcc4aa-52c8-4fb6-b2f1-b5f15b766577
+		summarizeBy: none
+		sourceColumn: Tipo Venda
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês/Ano
+		dataType: string
+		lineageTag: 12e414ae-e150-4205-a28b-f30a06e04e84
+		summarizeBy: none
+		sourceColumn: Mês/Ano
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TF_PEDIDOS = m
+		mode: import
+		source =
+				let
+				    Fonte = Folder.Files("\\wsl.localhost\Ubuntu\home\igbarreto\courses\datadriven\Datadriven\02 - DataToys\DadoseIcones\Pedidos"),
+				    #"Arquivos Ocultos Filtrados1" = Table.SelectRows(Fonte, each [Attributes]?[Hidden]? <> true),
+				    #"Invocar Função Personalizada1" = Table.AddColumn(#"Arquivos Ocultos Filtrados1", "Transformar Arquivo", each #"Transformar Arquivo"([Content])),
+				    #"Colunas Renomeadas1" = Table.RenameColumns(#"Invocar Função Personalizada1", {"Name", "Nome da Origem"}),
+				    #"Outras Colunas Removidas1" = Table.SelectColumns(#"Colunas Renomeadas1", {"Nome da Origem", "Transformar Arquivo"}),
+				    #"Coluna de Tabela Expandida1" = Table.ExpandTableColumn(#"Outras Colunas Removidas1", "Transformar Arquivo", Table.ColumnNames(#"Transformar Arquivo"(#"Arquivo de Amostra"))),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Coluna de Tabela Expandida1",{{"Nome da Origem", type text}, {"Código do Pedido", Int64.Type}, {"Ano", Int64.Type}, {"Mês", Int64.Type}, {"Dia", Int64.Type}, {"ID Produto", Int64.Type}, {"ID Loja", Int64.Type}, {"Quantidade", Int64.Type}, {"Preço Unitário", Int64.Type}, {"Tipo Venda", type text}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado",{"Código do Pedido", "Ano", "Mês", "Dia", "ID Produto", "ID Loja", "Quantidade", "Preço Unitário", "Tipo Venda"}),
+				    #"Colunas Mescladas" = Table.CombineColumns(Table.TransformColumnTypes(#"Outras Colunas Removidas", {{"Dia", type text}, {"Mês", type text}, {"Ano", type text}}, "pt-BR"),{"Dia", "Mês", "Ano"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Data"),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Colunas Mescladas",{{"Data", type date}}),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Tipo Alterado1", "Personalizar", each if [Tipo Venda] = "OFF" then "Presencial" else if [Tipo Venda] = "ON" then "Online" else null, type text),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Coluna Condicional Adicionada",{"Tipo Venda"}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Colunas Removidas",{{"Personalizar", "Tipo Venda"}}),
+				    #"Coluna Personalizada Adicionada" = Table.AddColumn(#"Colunas Renomeadas", "Personalizar", each Text.Combine({Text.Proper(Date.ToText([Data], "MMM")), "-", Date.ToText([Data], "yyyy")})),
+				    #"Colunas Renomeadas2" = Table.RenameColumns(#"Coluna Personalizada Adicionada",{{"Personalizar", "Mês/Ano"}})
+				in
+				    #"Colunas Renomeadas2"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
