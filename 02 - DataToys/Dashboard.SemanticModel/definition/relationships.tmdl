@@ -8,7 +8,7 @@ relationship b1bdc066-6476-7d5a-fdc6-5af09c374deb
 
 relationship 64c2e89f-d03c-49b2-d259-5a0ce17195ac
 	fromColumn: TF_METAS.Loja
-	toColumn: TD_LOJA.LOJA
+	toColumn: TD_LOJA.Loja
 
 relationship AutoDetected_bc48202f-73a2-4af8-8c59-b39f3b093575
 	fromColumn: TD_PRODUTOS.Categoria

@@ -18,7 +18,7 @@ table Medidas
 		lineageTag: 7f120193-4960-43ba-ad2f-d2693154dda8
 
 	measure 'Soma Metas' = SUM(TF_METAS[Valor])
-		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
 		displayFolder: Agregação
 		lineageTag: 442f05c3-a0e1-41e9-aac7-6113a8d5ab94
 
@@ -42,7 +42,7 @@ table Medidas
 		lineageTag: 97a346cd-28f8-40d9-9a25-42b189b6427f
 
 	measure '% Vendas VS Metas' = [Soma Vendas]/[Soma Metas]
-		formatString: 0.00%;-0.00%;0.00%
+		formatString: 0%;-0%;0%
 		displayFolder: Percentuais
 		lineageTag: e40fb457-c5e1-40c1-803f-87c6a8ad3eb4
 
@@ -272,6 +272,11 @@ table Medidas
 		formatString: 0
 		displayFolder: Agregação
 		lineageTag: 50efe366-761f-4ee6-9074-659bb23ecd6c
+
+	measure 'Valor Max' = 28000000
+		formatString: 0
+		displayFolder: DataViz
+		lineageTag: e3fb4b01-5e38-4bd8-aa0d-dd69b204ed61
 
 	partition Medidas = m
 		mode: import

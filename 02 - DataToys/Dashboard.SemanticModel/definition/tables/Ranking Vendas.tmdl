@@ -1,0 +1,50 @@
+table 'Ranking Vendas'
+	lineageTag: acde038e-e0f3-4ae4-b2aa-db59aa3017b9
+
+	column 'Ranking Vendas'
+		lineageTag: a3d801c6-27cd-423a-8e84-c7325a39d88d
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Ranking Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Ranking Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ranking Campos'
+		isHidden
+		lineageTag: c566442f-a772-4004-91d1-00d1807bdbbb
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Ranking Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ranking Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: d109b3d3-76a1-4ee0-a844-ab5d83ccf5ee
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Ranking Vendas' = calculated
+		mode: import
+		source =
+				{
+				    ("Loja", NAMEOF('TD_LOJA'[Loja]), 0),
+				    ("Categoria", NAMEOF('TD_CATEGORIA'[Categoria]), 1),
+				    ("Produto", NAMEOF('TD_PRODUTOS'[Produto]), 2),
+				    ("Fornecedor", NAMEOF('TD_PRODUTOS'[Fornecedor]), 3)
+				}
+
+	annotation PBI_Id = c19eb71400fd4fb5a83f40f043e272eb
+

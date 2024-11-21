@@ -12,11 +12,11 @@ table TD_LOJA
 
 		annotation SummarizationSetBy = Automatic
 
-	column LOJA
+	column Loja
 		dataType: string
 		lineageTag: e14becc5-f4e5-4b12-afac-330c02a4c06e
 		summarizeBy: none
-		sourceColumn: LOJA
+		sourceColumn: Loja
 
 		changedProperty = IsHidden
 
@@ -25,6 +25,7 @@ table TD_LOJA
 	column UF
 		dataType: string
 		lineageTag: c735123b-02ac-4a25-bb26-b685e3ce2ffc
+		dataCategory: StateOrProvince
 		summarizeBy: none
 		sourceColumn: UF
 
@@ -59,7 +60,7 @@ table TD_LOJA
 				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Colunas Renomeadas1",{{"Região", type text}}),
 				    #"Valor Substituído1" = Table.ReplaceValue(#"Tipo Alterado2","Fábrica De Diversão","Fábrica de Diversão",Replacer.ReplaceText,{"LOJA"}),
 				    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","Paraíso Dos Brinquedos","Paraíso dos Brinquedos",Replacer.ReplaceText,{"LOJA"}),
-				    #"Colunas Renomeadas2" = Table.RenameColumns(#"Valor Substituído2",{{"                UF", "UF"}})
+				    #"Colunas Renomeadas2" = Table.RenameColumns(#"Valor Substituído2",{{"                UF", "UF"}, {"LOJA", "Loja"}})
 				in
 				    #"Colunas Renomeadas2"
 
