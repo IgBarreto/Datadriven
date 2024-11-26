@@ -1,0 +1,48 @@
+table '$ ou Qtde Produtos'
+	lineageTag: 33695bab-89ed-498e-8db4-6981874dabf6
+
+	column Parâmetro
+		lineageTag: 31fac146-452c-40f6-8b06-c12ab3764925
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parâmetro Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Parâmetro Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parâmetro Campos'
+		isHidden
+		lineageTag: 33ecc833-a0e2-4f50-91e5-61ccecf653c2
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parâmetro Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parâmetro Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: 12e64297-ce1d-4413-94cc-a5120c6181bc
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '$ ou Qtde Produtos' = calculated
+		mode: import
+		source =
+				{
+				    ("SOMA VENDAS", NAMEOF('Medidas'[Soma Vendas]), 0),
+				    ("SOMA QTD", NAMEOF('Medidas'[Soma Qtd]), 1)
+				}
+
+	annotation PBI_Id = e4c283d5cf95444a99ebe5d77cf0b0e6
+

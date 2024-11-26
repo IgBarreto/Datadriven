@@ -103,8 +103,15 @@ cultureInfo pt-BR
 			          "uf": {
 			            "State": "Generated"
 			          }
+			        },
+			        {
+			          "state or province": {
+			            "State": "Generated",
+			            "Weight": 0.7
+			          }
 			        }
-			      ]
+			      ],
+			      "SemanticType": "Location"
 			    },
 			    "td_loja.região": {
 			      "Definition": {
@@ -963,6 +970,16 @@ cultureInfo pt-BR
 			        {
 			          "soma qtd": {
 			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Qtd Itens": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -2814,75 +2831,207 @@ cultureInfo pt-BR
 			          }
 			        }
 			      ]
-			    }
-			  },
-			  "Relationships": {
-			    "td_calendario_data_variation_hierarquia_de_data_trimestre_has_td_calendario_data_variation_hierarquia_de_data_mê": {
-			      "Binding": {
-			        "ConceptualEntity": "TD_CALENDARIO"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "td_calendario.data.variation.hierarquia_de_data.trimestre": {
-			          "Target": {
-			            "Entity": "td_calendario.data.variation.hierarquia_de_data.trimestre"
-			          }
-			        },
-			        "td_calendario.data.variation.hierarquia_de_data.mê": {
-			          "Target": {
-			            "Entity": "td_calendario.data.variation.hierarquia_de_data.mê"
-			          }
+			    },
+			    "medida.valor_max": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medidas",
+			          "ConceptualProperty": "Valor Max"
 			        }
 			      },
-			      "Phrasings": [
+			      "State": "Generated",
+			      "Terms": [
 			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "td_calendario.data.variation.hierarquia_de_data.trimestre"
-			            },
-			            "Object": {
-			              "Role": "td_calendario.data.variation.hierarquia_de_data.mê"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê"
+			          "valor max": {
+			            "State": "Generated"
+			          }
 			        },
 			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "td_calendario.data.variation.hierarquia_de_data.mê"
+			          "valor maximum": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
 			            },
-			            "Object": {
-			              "Role": "td_calendario.data.variation.hierarquia_de_data.trimestre"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres"
-			        },
-			        {
-			          "Preposition": {
-			            "Subject": {
-			              "Role": "td_calendario.data.variation.hierarquia_de_data.mê"
-			            },
-			            "Prepositions": [
-			              {
-			                "in": {
-			                  "State": "Generated"
-			                }
-			              }
-			            ],
-			            "Object": {
-			              "Role": "td_calendario.data.variation.hierarquia_de_data.trimestre"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "mê_are_in_trimestres"
+			            "Weight": 0.727
+			          }
 			        }
 			      ]
 			    },
+			    "ranking_venda": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Ranking Vendas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ranking venda": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "venda": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "ranking_venda.ranking_venda": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Ranking Vendas",
+			          "ConceptualProperty": "Ranking Vendas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ranking venda": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "ranking venda name": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "venda": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ],
+			      "NameType": "Name"
+			    },
+			    "ranking_venda.ranking_campos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Ranking Vendas",
+			          "ConceptualProperty": "Ranking Campos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "ranking campos": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "campos": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "ranking_venda.ranking_pedido": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Ranking Vendas",
+			          "ConceptualProperty": "Ranking Pedido"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "ranking pedido": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "ou_qtde_produto": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "$ ou Qtde Produtos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "$ ou qtde produto": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "dollar ou qtde produto": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        }
+			      ]
+			    },
+			    "ou_qtde_produto.parâmetro": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "$ ou Qtde Produtos",
+			          "ConceptualProperty": "Parâmetro"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "parâmetro": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "ou_qtde_produto.parâmetro_campos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "$ ou Qtde Produtos",
+			          "ConceptualProperty": "Parâmetro Campos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "parâmetro campos": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "ou_qtde_produto.parâmetro_pedido": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "$ ou Qtde Produtos",
+			          "ConceptualProperty": "Parâmetro Pedido"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "parâmetro pedido": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    }
+			  },
+			  "Relationships": {
 			    "td_calendario_data_variation_hierarquia_de_data_ano_has_td_calendario_data_variation_hierarquia_de_data_trimestre": {
 			      "Binding": {
 			        "ConceptualEntity": "TD_CALENDARIO"
@@ -3500,6 +3649,118 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "td_categorias_have_td_produtos"
+			        }
+			      ]
+			    },
+			    "ou_qtde_produto_has_parâmetro": {
+			      "Binding": {
+			        "ConceptualEntity": "$ ou Qtde Produtos"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "ou_qtde_produto": {
+			          "Target": {
+			            "Entity": "ou_qtde_produto"
+			          }
+			        },
+			        "ou_qtde_produto.parâmetro": {
+			          "Target": {
+			            "Entity": "ou_qtde_produto.parâmetro"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "ou_qtde_produto"
+			            },
+			            "Object": {
+			              "Role": "ou_qtde_produto.parâmetro"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "ou_qtde_produtos_have_parâmetros"
+			        }
+			      ]
+			    },
+			    "ranking_venda_has_ranking_venda": {
+			      "Binding": {
+			        "ConceptualEntity": "Ranking Vendas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "ranking_venda": {
+			          "Target": {
+			            "Entity": "ranking_venda"
+			          }
+			        },
+			        "ranking_venda.ranking_venda": {
+			          "Target": {
+			            "Entity": "ranking_venda.ranking_venda"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "ranking_venda"
+			            },
+			            "Object": {
+			              "Role": "ranking_venda.ranking_venda"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "ranking_venda_have_ranking_venda"
+			        },
+			        {
+			          "Name": {
+			            "Subject": {
+			              "Role": "ranking_venda"
+			            },
+			            "Name": {
+			              "Role": "ranking_venda.ranking_venda"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "ranking_venda_are_names_IDs_of_ranking_venda"
+			        }
+			      ]
+			    },
+			    "medida_has_valor_max": {
+			      "Binding": {
+			        "ConceptualEntity": "Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.valor_max": {
+			          "Target": {
+			            "Entity": "medida.valor_max"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.valor_max"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "medidas_have_valor_max"
 			        }
 			      ]
 			    },
@@ -5889,6 +6150,117 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "ID_are_names_IDs_of_td_loja"
+			        }
+			      ]
+			    },
+			    "td_loja_in_uf": {
+			      "Binding": {
+			        "ConceptualEntity": "TD_LOJA"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "td_loja": {
+			          "Target": {
+			            "Entity": "td_loja"
+			          }
+			        },
+			        "td_loja.uf": {
+			          "Target": {
+			            "Entity": "td_loja.uf"
+			          }
+			        }
+			      },
+			      "SemanticSlots": {
+			        "Where": {
+			          "Role": "td_loja.uf"
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "td_loja"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "td_loja.uf"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "td_loja_are_in_ufs"
+			        }
+			      ]
+			    },
+			    "td_calendario_data_variation_hierarquia_de_data_trimestre_has_td_calendario_data_variation_hierarquia_de_data_mê": {
+			      "Binding": {
+			        "ConceptualEntity": "TD_CALENDARIO"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "td_calendario.data.variation.hierarquia_de_data.trimestre": {
+			          "Target": {
+			            "Entity": "td_calendario.data.variation.hierarquia_de_data.trimestre"
+			          }
+			        },
+			        "td_calendario.data.variation.hierarquia_de_data.mê": {
+			          "Target": {
+			            "Entity": "td_calendario.data.variation.hierarquia_de_data.mê"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "td_calendario.data.variation.hierarquia_de_data.trimestre"
+			            },
+			            "Object": {
+			              "Role": "td_calendario.data.variation.hierarquia_de_data.mê"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "trimestres_have_mê"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "td_calendario.data.variation.hierarquia_de_data.mê"
+			            },
+			            "Object": {
+			              "Role": "td_calendario.data.variation.hierarquia_de_data.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "mê_have_trimestres"
+			        },
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "td_calendario.data.variation.hierarquia_de_data.mê"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "td_calendario.data.variation.hierarquia_de_data.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "mê_are_in_trimestres"
 			        }
 			      ]
 			    },
